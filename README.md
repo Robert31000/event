@@ -56,6 +56,17 @@ Framer Motion: animaciones de alta/baja de eventos declarativas.
 
 Vitest: tests rápidos para hooks y lógica.
 
+## Patrones y antipatrónes
+
+#** Patrones**  
+- **Adapter** para aislar `localStorage` de la lógica de negocio.  
+- **SRP (Single Responsibility)**: un hook solo gestiona eventos, otro solo la UI.  
+- **Facade (Custom Hook)**: `useEventHandlers` expone una API simple a los componentes.
+
+**Antipatrones evitados**  
+- **Nested forms**: ninguna `<form>` dentro de otra.  
+- **Lógica en JSX**: las validaciones están en los hooks, no en el render.
+
 Trabajo futuro
 Sustituir localStorage por IndexedDB o API REST.
 
