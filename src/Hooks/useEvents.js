@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { toast } from 'react-toastify'
 
 const STORAGE_KEY = 'salaeventos_events'
 
@@ -38,13 +39,14 @@ export function useEvents() {
       }
 
       // 2) solapamiento en la misma sala
+
       const overlap = prev.some(ev =>
         ev.room === room &&
         !(toMin(ev.end) <= s || toMin(ev.start) >= e)
       )
       if (overlap) {
         ok = false
-        error = 'Ya hay un evento en ese horario'
+        error = toast.error('Hay un evento en ese horario')
         return prev
       }
 
@@ -52,10 +54,9 @@ export function useEvents() {
       return [...prev, { name, room, start, end }]
     })
 
-    return ok ? { ok } : { ok: false, error }
-  }, []) // <<<<<< no dependencias
+    return ok ? { ok } : { ok: false,  }
+  }, []) 
 
-  /** Cancela un evento por nombre */
   const cancel = useCallback(
     name => setEvents(prev => prev.filter(ev => ev.name !== name)),
     []

@@ -1,12 +1,64 @@
 # React + Vite
+# Administrador de Eventos en Tiempo Real
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto de una SPA que permite gestionar eventos en salas, desarrollado con React 19, Vite, TailwindCSS y Framer Motion. La información se almacena en `localStorage`.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Registrar eventos** sin solapamientos en la misma sala. 
+- **Consultar eventos activos** dentro de un intervalo de tiempo. 
+- **Cancelar eventos** por su nombre. 
+- **Informe de ocupación**: muestra minutos y horas ocupadas por sala.
 
-## Expanding the ESLint configuration
+## Ejemplo de flujo
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Registro:
+   - Evento A (Sala 1, 09:00–11:00) → aceptado. 
+   - Evento B (Sala 1, 10:30–12:00) → rechazado (solapamiento). 
+   - Evento C (Sala 2, 10:00–11:30) → aceptado. 
+2. Consulta 10:00–10:45 → se listan A y C. 
+3. Cancelación de “Evento A” → solo queda C. 
+4. Informe `.
+
+## Estructura del proyecto
+
+src/
+├─ hooks/
+│ ├─ useEvents.js 
+│ └─ useEventHandlers.js 
+├─ components/ // EventForm, RangeFilter, EventList…
+├─ utils/
+│ └─ occupancy.js
+├─ pages/
+│ └─ Home.jsx
+└─ tests
+
+bash
+Copiar
+Editar
+
+## Instalación y ejecución
+
+```bash
+git clone https://github.com/usuario/event-manager.git
+cd event-manager
+npm install
+npm run dev    # abre http://localhost:5173
+npm test       # corre la suite de Vitest
+Decisiones técnicas
+React + Hooks: separación clara entre lógica y presentación.
+
+localStorage: persistencia sin servidor, intercambiable por otro adapter.
+
+TailwindCSS: configuración mínima de estilos.
+
+Framer Motion: animaciones de alta/baja de eventos declarativas.
+
+Vitest: tests rápidos para hooks y lógica.
+
+Trabajo futuro
+Sustituir localStorage por IndexedDB o API REST.
+
+Optimizar consultas con un Interval Tree para grandes volúmenes.
+
+Integrar autenticación y multiusuario.
