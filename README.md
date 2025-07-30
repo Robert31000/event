@@ -40,8 +40,6 @@ Editar
 ## Instalación y ejecución
 
 ```bash
-git clone https://github.com/usuario/event-manager.git
-cd event-manager
 npm install
 npm run dev    # abre http://localhost:5173
 npm test       # corre la suite de Vitest
